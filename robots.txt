@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+
 Sitemap: https://orbitwebtools.github.io/image-resizer-20kb/sitemap.xml
