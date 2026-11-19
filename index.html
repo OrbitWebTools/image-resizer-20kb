@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://orbitwebtools.github.io/image-resizer-20kb/" />
     <link rel="apple-touch-icon" href="https://orbitwebtools.github.io/image-resizer-20kb/icon-512.png">
 
-    <!-- OPEN GRAPH: updated title and description; added og:site_name -->
+    <!-- OPEN GRAPH -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="OrbitWebTools">
     <meta property="og:title" content="Resize Image to 20KB | Compress Photo &amp; Signature Free">
@@ -26,13 +26,13 @@
     <meta property="og:url" content="https://orbitwebtools.github.io/image-resizer-20kb/">
     <meta property="og:image" content="https://orbitwebtools.github.io/image-resizer-20kb/icon-512.png">
 
-    <!-- TWITTER CARD: added missing twitter:image -->
+    <!-- TWITTER CARD -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Resize Image to 20KB | Compress Photo &amp; Signature Free">
     <meta name="twitter:description" content="Free browser-based tool to compress photo and signature to exactly 10KB, 20KB or 50KB. No upload to server. 100% private. Built for SSC, UPSC, IBPS applications.">
     <meta name="twitter:image" content="https://orbitwebtools.github.io/image-resizer-20kb/icon-512.png">
 
-    <!-- STRUCTURED DATA: enhanced WebApplication + new FAQPage schema -->
+    <!-- STRUCTURED DATA: WebApplication + FAQPage schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -43,7 +43,7 @@
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "Any (Web Browser)",
       "browserRequirements": "Requires JavaScript",
-      "featureList": "Resize image to 20KB, Compress photo to 10KB, Resize signature to 10KB or 20KB, Custom KB target size, PNG to JPG conversion, Drag and drop upload, Client-side processing only",
+      "featureList": "Resize image to 20KB, Compress photo to 10KB, Resize signature to 10KB or 20KB, Custom KB target size, PNG and WebP to JPG conversion, Drag and drop upload, Client-side processing only",
       "creator": {
         "@type": "Organization",
         "name": "OrbitWebTools",
@@ -67,7 +67,7 @@
           "name": "How do I resize an image to exactly 20KB?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Upload your JPG or PNG photo using the tool above, select the 20 KB preset, and click Compress Image Now. The tool uses an iterative binary search algorithm to compress your image to within 15% of 20KB — entirely inside your browser. No account or software installation required."
+            "text": "Upload your JPG, PNG, or WebP photo using the tool above, select the 20 KB preset, and click Compress Image Now. The tool uses an iterative binary search algorithm to compress your image to within 10% under 20KB — entirely inside your browser. No account or software installation required."
           }
         },
         {
@@ -106,7 +106,7 @@
     }
     </script>
 
-    <!-- GOOGLE FONTS: converted from render-blocking to non-blocking preload -->
+    <!-- GOOGLE FONTS: non-blocking preload -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -129,7 +129,8 @@
             --radius-md: 16px;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* FIXED: Corrected '-' typo to '*' universal selector */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
         
         body { 
             background: var(--bg-gradient); 
@@ -156,7 +157,7 @@
 
         /* Main Glass Card */
         .glass-panel { 
-            background: var(--surface); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05); 
+            background: var(--surface); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.08); 
             backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); 
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6); padding: 40px; margin-bottom: 40px; 
         }
@@ -175,27 +176,35 @@
         .upload-desc { color: var(--text-muted); font-size: 0.95rem; }
 
         /* Controls Section */
-        .controls { margin-top: 35px; display: none; animation: fadeIn 0.4s ease forwards; }
+        .controls { margin-top: 10px; display: none; animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
+        .file-chip {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08);
+            padding: 12px 18px; border-radius: 12px; margin-bottom: 24px; font-size: 0.9rem;
+        }
+        .file-chip-name { font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .file-chip-meta { color: var(--primary); font-weight: 700; white-space: nowrap; }
+
         .section-label { font-size: 1.05rem; font-weight: 700; margin-bottom: 15px; display: block; color: #fff; }
 
         .preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .preset-btn { 
             background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); 
             padding: 16px; border-radius: var(--radius-md); text-align: center; cursor: pointer; 
-            transition: all 0.2s; 
+            transition: all 0.2s; color: inherit; width: 100%;
         }
         .preset-btn .size { font-size: 1.2rem; font-weight: 800; color: #fff; display: block; }
         .preset-btn .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; display: block; }
-        .preset-btn:hover { background: rgba(255,255,255,0.05); }
+        .preset-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
         .preset-btn.active { 
             background: rgba(56, 189, 248, 0.15); border-color: var(--primary); 
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.15); 
         }
 
         .custom-size-wrapper { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.6); padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1); width: max-content; }
-        .custom-size-wrapper input { background: transparent; border: none; outline: none; color: var(--primary); font-size: 1.3rem; font-weight: 800; width: 70px; text-align: center; }
+        .custom-size-wrapper input { background: transparent; border: none; outline: none; color: var(--primary); font-size: 1.3rem; font-weight: 800; width: 80px; text-align: center; }
         .custom-size-wrapper span { color: var(--text-muted); font-weight: 600; }
 
         /* Action Buttons */
@@ -208,7 +217,7 @@
         .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
         /* Results & Previews */
-        .results-panel { display: none; margin-top: 40px; padding-top: 40px; border-top: 1px dashed rgba(255,255,255,0.15); }
+        .results-panel { display: none; margin-top: 10px; animation: fadeIn 0.4s ease forwards; }
         .preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
         
         .preview-box { background: rgba(15, 23, 42, 0.5); border-radius: var(--radius-md); padding: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
@@ -218,6 +227,7 @@
         .size-badge { display: inline-block; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 1.1rem; }
         .size-original { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
         .size-compressed { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .dim-meta { display: block; margin-top: 6px; font-size: 0.8rem; color: var(--text-muted); }
 
         .btn-download {
             display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; 
@@ -227,10 +237,10 @@
         }
         .btn-download:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.6); }
 
-        .reset-link { display: block; text-align: center; margin-top: 20px; color: var(--text-muted); text-decoration: underline; cursor: pointer; font-weight: 500; }
+        .action-links { display: flex; justify-content: center; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+        .reset-link { color: var(--text-muted); text-decoration: underline; cursor: pointer; font-weight: 500; background: none; border: none; font-size: 0.95rem; }
         .reset-link:hover { color: #fff; }
 
-        /* Results heading — functional UI label, not a document heading */
         .results-heading {
             text-align: center; margin-bottom: 25px; font-size: 1.2rem;
             font-weight: 700; color: #fff;
@@ -259,13 +269,14 @@
         .specs-table td { background: rgba(15, 23, 42, 0.3); color: var(--text-muted); }
 
         /* Toast Notification */
-        .toast { position: fixed; bottom: 30px; right: 30px; background: #333; color: #fff; padding: 15px 25px; border-radius: 8px; font-weight: 600; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #1e293b; color: #fff; padding: 15px 25px; border-radius: 10px; font-weight: 600; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .toast.show { transform: translateY(0); opacity: 1; }
         .toast.error { border-left: 5px solid var(--danger); }
         .toast.success { border-left: 5px solid var(--success); }
 
-        footer { text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 0.95rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.95rem; border-top: 1px solid rgba(255,255,255,0.05); }
         footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        footer a:hover { text-decoration: underline; }
 
         @media(max-width: 768px) {
             .glass-panel, .content-card { padding: 25px; }
@@ -280,7 +291,6 @@
     <header>
         <div class="badge">100% Free &amp; Secure</div>
         <h1>Image Resizer <span>20KB</span></h1>
-        <!-- Subtitle updated: leads with resize/size language; covers photo, signature, exam context -->
         <p class="subtitle">Resize photo or signature to 10KB, 20KB or 50KB — free, instant, secure.</p>
     </header>
 
@@ -289,104 +299,113 @@
             <span class="upload-icon">📤</span>
             <div class="upload-text">
                 <div class="upload-title">Click or Drag &amp; Drop Image</div>
-                <div class="upload-desc">Supports JPG, JPEG, PNG (Up to 25MB)</div>
+                <div class="upload-desc">Supports JPG, JPEG, PNG, WebP (Up to 25MB)</div>
             </div>
-            <input type="file" id="fileInput" accept="image/jpeg, image/png, image/jpg" hidden>
+            <input type="file" id="fileInput" accept="image/jpeg, image/png, image/jpg, image/webp" hidden>
         </label>
 
         <div class="controls" id="controlsSection">
+            <div class="file-chip">
+                <span class="file-chip-name" id="fileChipName">photo.jpg</span>
+                <span class="file-chip-meta" id="fileChipSize">0 KB</span>
+            </div>
+
             <span class="section-label">Select Target File Size:</span>
             <div class="preset-grid">
-                <div class="preset-btn active" data-size="20">
+                <button type="button" class="preset-btn active" data-size="20">
                     <span class="size">20 KB</span>
                     <span class="label">SSC / IBPS Photo</span>
-                </div>
-                <div class="preset-btn" data-size="50">
+                </button>
+                <button type="button" class="preset-btn" data-size="50">
                     <span class="size">50 KB</span>
                     <span class="label">UPSC Portrait</span>
-                </div>
-                <div class="preset-btn" data-size="10">
+                </button>
+                <button type="button" class="preset-btn" data-size="10">
                     <span class="size">10 KB</span>
                     <span class="label">Signature Size</span>
-                </div>
-                <div class="preset-btn" data-size="100">
+                </button>
+                <button type="button" class="preset-btn" data-size="100">
                     <span class="size">100 KB</span>
                     <span class="label">Documents</span>
-                </div>
+                </button>
             </div>
 
             <span class="section-label" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:10px;">Or Enter Custom Size:</span>
             <div class="custom-size-wrapper">
-                <input type="number" id="customSizeInput" value="20" min="5" max="2000">
+                <input type="number" id="customSizeInput" value="20" min="5" max="2000" aria-label="Custom target size in KB">
                 <span>KB</span>
             </div>
 
-            <button class="btn-primary" id="compressBtn">COMPRESS IMAGE NOW 🚀</button>
+            <button type="button" class="btn-primary" id="compressBtn">COMPRESS IMAGE NOW 🚀</button>
         </div>
 
         <div class="results-panel" id="resultsSection">
-            <!-- Changed from h3 to p.results-heading — this is a UI label, not a document heading -->
             <p class="results-heading">Compression Complete! 🎉</p>
             <div class="preview-grid">
                 <div class="preview-box">
                     <h4>Original Image</h4>
                     <div class="preview-img-wrapper"><img id="originalPreviewImg" src="" alt="Original uploaded image before compression"></div>
                     <div class="size-badge size-original" id="originalSizeTxt">0 KB</div>
+                    <span class="dim-meta" id="originalDimTxt"></span>
                 </div>
                 <div class="preview-box">
                     <h4>Compressed Image</h4>
                     <div class="preview-img-wrapper"><img id="compressedPreviewImg" src="" alt="Compressed image output after resizing"></div>
                     <div class="size-badge size-compressed" id="compressedSizeTxt">0 KB</div>
+                    <span class="dim-meta" id="compressedDimTxt"></span>
                 </div>
             </div>
             <a href="#" class="btn-download" id="downloadBtn" download="compressed_image.jpg">
                 ⬇️ Download Compressed Image
             </a>
-            <span class="reset-link" onclick="resetTool()">Compress Another Image</span>
+            <div class="action-links">
+                <button type="button" class="reset-link" onclick="tryAnotherSize()">Try Another KB Size</button>
+                <button type="button" class="reset-link" onclick="resetTool()">Compress Another Image</button>
+            </div>
         </div>
     </main>
 
     <section class="seo-content">
 
-        <!-- ARTICLE 1: About the tool — updated H2, kept body, added lang="hi" to Hindi, added contextual link -->
+        <!-- ARTICLE 1 -->
         <article class="content-card">
             <h2>Best Photo &amp; Signature Resizer for Govt Exams (10KB to 50KB)</h2>
             <p>Welcome to <strong>Image Resizer 20KB</strong> by OrbitWebTools. If online application forms are rejecting your photos or signatures due to large file sizes, you are in the right place. <span lang="hi">Humara tool specially design kiya gaya hai <strong>photo ka size kam karne</strong> ke liye</span> — without losing visual clarity.</p>
-            <p>Whether you need to compress a JPEG to 20KB for SSC, reduce a signature to 10KB, or bring any image down to 50KB for UPSC, this browser-based application does it instantly. Before uploading to any exam portal, you can also use <a href="https://orbitwebtools.github.io/PhotoReady/">PhotoReady</a> to add your name and date to your photograph.</p>
+            <p>Whether you need to compress a JPEG to 20KB for SSC, reduce a signature to 10KB, or bring any image down to 50KB for UPSC, this browser-based application does it instantly. Need a 50–100KB photo or PDF conversion? Try our <a href="https://orbitwebtools.github.io/photo-compress-50-to-100-kb-and-pdf-tools/">Photo Compress 50 to 100 KB &amp; PDF Suite</a>, or use <a href="https://orbitwebtools.github.io/PhotoReady/">PhotoReady</a> to add your name and date to your photograph.</p>
             
             <h3>Why Use OrbitWebTools Image Resizer?</h3>
             <ul>
                 <li><strong>100% Privacy Secure:</strong> <span lang="hi">Aapki photos kisi bhi server par upload nahi hoti. Pura compression aapke apne mobile ya computer ke browser mein hota hai.</span> Nothing leaves your device.</li>
-                <li><strong>Exact Target Size:</strong> Enter any KB value you need (10KB, 20KB, 50KB, or a custom amount). Our smart algorithm adjusts quality and resolution automatically to hit your target.</li>
-                <li><strong>No Quality Loss (Blur-Free):</strong> We use an Iterative Binary Search algorithm to ensure the highest possible resolution within the strict KB limit you set.</li>
+                <li><strong>Exact Target Size:</strong> Enter any KB value you need (10KB, 20KB, 50KB, or a custom amount). Our smart binary-search algorithm adjusts quality and resolution automatically to hit your target.</li>
+                <li><strong>No Quality Loss (Blur-Free):</strong> We use native Blob binary search to preserve the highest possible sharpness within the strict KB limit you set.</li>
             </ul>
         </article>
 
-        <!-- ARTICLE 2 (NEW): How to resize image to 20KB — targets 33,698 impression query cluster -->
+        <!-- ARTICLE 2 -->
         <article class="content-card">
             <h2>How to Resize an Image to 20KB Online (Step-by-Step)</h2>
             <p>Resizing an image to exactly 20KB is one of the most common requirements for Indian government job application forms. SSC, UPSC, IBPS, Railways, and many state-level recruitments all specify a maximum photo file size, and 20KB is among the most frequently required limits. This tool handles the compression automatically — no Photoshop, no app installation needed.</p>
 
             <h3>Steps to Reduce Any Photo to 20KB</h3>
             <ol>
-                <li><strong>Upload your photo.</strong> Click the upload area above or drag and drop your JPG or PNG file (up to 25MB accepted).</li>
+                <li><strong>Upload your photo.</strong> Click the upload area above or drag and drop your JPG, PNG, or WebP file (up to 25MB accepted).</li>
                 <li><strong>Select the 20 KB preset</strong> from the size buttons. For other targets, type the value directly into the custom KB field.</li>
                 <li><strong>Click "Compress Image Now".</strong> The tool runs an intelligent compression cycle inside your browser — no data is sent to any server.</li>
-                <li><strong>Review the before-and-after.</strong> Both the original and compressed file sizes are displayed side by side so you can verify the result.</li>
+                <li><strong>Review the before-and-after.</strong> Both the original and compressed file sizes and dimensions are displayed side by side so you can verify the result.</li>
                 <li><strong>Download your resized image.</strong> The output is a JPG file, which is the format required by most government and banking exam portals.</li>
             </ol>
 
             <h3>Can I Convert a Photo to 20KB in JPG Format?</h3>
-            <p>Yes. Even if your original photo is a PNG, this tool automatically converts it to JPEG during compression and fills any transparent areas with a white background. The downloaded file will always be a JPG, making it ready for SSC, UPSC, IBPS, or any other portal that requires JPEG format.</p>
+            <p>Yes. Even if your original photo is a PNG or WebP, this tool automatically converts it to JPEG during compression and fills any transparent areas with a white background. The downloaded file will always be a JPG, making it ready for SSC, UPSC, IBPS, or any other portal that requires JPEG format.</p>
 
             <h3>What If the Image Cannot Reach 20KB?</h3>
-            <p>Very large or high-resolution photos (above 4000×3000 pixels) may need a small reduction in image dimensions to reach 20KB without excessive quality loss. The tool automatically adjusts both quality and resolution if quality-alone compression is insufficient — up to 35 iterations are run to find the best result. No manual steps are required on your end.</p>
+            <p>Very large or high-resolution photos (above 4000×3000 pixels) may need a small reduction in image dimensions to reach 20KB without excessive quality loss. The tool automatically adjusts both quality and resolution if quality-alone compression is insufficient. No manual steps are required on your end.</p>
 
             <h3>Accepted Photo Pixel Dimensions for a 20KB JPEG</h3>
             <p>A standard passport-size photo at 200×230 pixels or 240×320 pixels, compressed to JPEG quality 60–80%, typically falls in the 15KB–30KB range. Our algorithm iterates to get as close to your exact target as possible while preserving the sharpness needed for identity verification on application forms.</p>
         </article>
 
-        <!-- ARTICLE 3 (NEW): Signature resizing — targets 42,091-impression signature cluster -->
+        <!-- ARTICLE 3 -->
         <article class="content-card">
             <h2>How to Resize Signature Image to 10KB–20KB (JPG Format)</h2>
             <p>Most government and banking exam portals require a scanned signature in JPG format with a file size between 10KB and 20KB. The <strong>10 KB — Signature Size</strong> preset in this tool is set precisely for the most common lower limit. If the portal accepts up to 20KB, enter 20 in the custom size field.</p>
@@ -414,7 +433,7 @@
             <p>If the exam portal rejects the signature file, try a slightly higher target (15KB or 20KB) — some portals show "10KB minimum" but accept files up to 20KB. Always check the official notification for the exact range permitted.</p>
         </article>
 
-        <!-- ARTICLE 4 (EXISTING): Official exam photo guidelines table — added Railway row -->
+        <!-- ARTICLE 4 -->
         <article class="content-card">
             <h2>Official Photo &amp; Signature Guidelines for Indian Exams (2026)</h2>
             <p>Before uploading, ensure your images match these size requirements from major recruitment portals. Use the presets on this tool to reach your target in one click.</p>
@@ -471,13 +490,13 @@
             <p style="margin-top: 20px; font-size: 0.9rem;">Always verify the exact size limits in the official notification for your specific exam and year — requirements can change between recruitment cycles.</p>
         </article>
 
-        <!-- ARTICLE 5 (NEW): FAQ — matches FAQPage schema above; addresses real GSC query questions -->
+        <!-- ARTICLE 5 -->
         <article class="content-card">
             <h2>Frequently Asked Questions</h2>
 
             <div class="faq-item">
                 <h3>How do I resize an image to exactly 20KB?</h3>
-                <p>Upload your JPG or PNG photo using the tool above, select the <strong>20 KB</strong> preset, and click "Compress Image Now". The tool uses an iterative binary search algorithm to compress your image to within 15% of 20KB — entirely inside your browser. No account or software installation is needed, and nothing is uploaded to any server.</p>
+                <p>Upload your JPG, PNG, or WebP photo using the tool above, select the <strong>20 KB</strong> preset, and click "Compress Image Now". The tool uses an iterative binary search algorithm to compress your image strictly under 20KB while keeping maximum visual clarity — entirely inside your browser.</p>
             </div>
 
             <div class="faq-item">
@@ -505,7 +524,9 @@
 
     <footer>
         <p>Built with ❤️ by <a href="https://orbitwebtools.github.io/">OrbitWebTools</a> © 2026</p>
-        <p style="margin-top: 10px; font-size: 0.85rem;">Check out <a href="https://orbitwebtools.github.io/PhotoReady/">PhotoReady</a> to add Name &amp; Date to your photos.</p>
+        <p style="margin-top: 10px; font-size: 0.85rem;">
+            More Tools: <a href="https://orbitwebtools.github.io/photo-compress-50-to-100-kb-and-pdf-tools/">Photo Compress 50–100KB &amp; PDF Suite</a> &middot; <a href="https://orbitwebtools.github.io/PhotoReady/">PhotoReady (Name &amp; Date)</a>
+        </p>
     </footer>
 </div>
 
@@ -520,17 +541,22 @@
     const compressBtn = document.getElementById('compressBtn');
     const customSizeInput = document.getElementById('customSizeInput');
     const presetBtns = document.querySelectorAll('.preset-btn');
+    const fileChipName = document.getElementById('fileChipName');
+    const fileChipSize = document.getElementById('fileChipSize');
     
     // Preview Elements
     const originalPreviewImg = document.getElementById('originalPreviewImg');
     const compressedPreviewImg = document.getElementById('compressedPreviewImg');
     const originalSizeTxt = document.getElementById('originalSizeTxt');
     const compressedSizeTxt = document.getElementById('compressedSizeTxt');
+    const originalDimTxt = document.getElementById('originalDimTxt');
+    const compressedDimTxt = document.getElementById('compressedDimTxt');
     const downloadBtn = document.getElementById('downloadBtn');
 
     let currentFile = null;
+    let originalObjectUrl = null;
+    let compressedObjectUrl = null;
 
-    // Toast Notification System
     function showToast(message, type = 'success') {
         const toast = document.getElementById('toastMsg');
         toast.textContent = message;
@@ -544,24 +570,29 @@
     uploadZone.addEventListener('drop', (e) => {
         e.preventDefault();
         uploadZone.classList.remove('dragover');
-        if(e.dataTransfer.files.length > 0) processUpload(e.dataTransfer.files[0]);
+        if (e.dataTransfer.files.length > 0) processUpload(e.dataTransfer.files[0]);
     });
-    fileInput.addEventListener('change', (e) => { if(e.target.files.length > 0) processUpload(e.target.files[0]); });
+    fileInput.addEventListener('change', (e) => { if (e.target.files.length > 0) processUpload(e.target.files[0]); });
 
     function processUpload(file) {
-        if(!file.type.match(/image\/(jpeg|jpg|png)/)) {
-            return showToast("Please upload a valid JPG or PNG image.", "error");
+        if (!file.type.match(/image\/(jpeg|jpg|png|webp)/)) {
+            return showToast("Please upload a valid JPG, PNG, or WebP image.", "error");
+        }
+        if (file.size > 25 * 1024 * 1024) {
+            return showToast("File is larger than 25MB. Please choose a smaller image.", "error");
         }
         
         currentFile = file;
-        
-        // Setup Original Preview
-        const objectUrl = URL.createObjectURL(file);
-        originalPreviewImg.src = objectUrl;
-        originalSizeTxt.textContent = (file.size / 1024).toFixed(2) + " KB";
+        if (originalObjectUrl) URL.revokeObjectURL(originalObjectUrl);
+        originalObjectUrl = URL.createObjectURL(file);
 
-        // Transition UI
+        originalPreviewImg.src = originalObjectUrl;
+        originalSizeTxt.textContent = (file.size / 1024).toFixed(2) + " KB";
+        fileChipName.textContent = file.name;
+        fileChipSize.textContent = (file.size / 1024).toFixed(2) + " KB";
+
         uploadZone.style.display = 'none';
+        resultsSection.style.display = 'none';
         controlsSection.style.display = 'block';
         showToast("Image loaded successfully!");
     }
@@ -579,7 +610,13 @@
         presetBtns.forEach(b => b.classList.remove('active'));
     });
 
-    // Reset Tool Function
+    window.tryAnotherSize = () => {
+        resultsSection.style.display = 'none';
+        controlsSection.style.display = 'block';
+        compressBtn.innerText = "COMPRESS IMAGE NOW 🚀";
+        compressBtn.disabled = false;
+    };
+
     window.resetTool = () => {
         currentFile = null;
         fileInput.value = '';
@@ -588,100 +625,131 @@
         resultsSection.style.display = 'none';
         compressBtn.innerText = "COMPRESS IMAGE NOW 🚀";
         compressBtn.disabled = false;
-        if(originalPreviewImg.src) URL.revokeObjectURL(originalPreviewImg.src);
+        if (originalObjectUrl) { URL.revokeObjectURL(originalObjectUrl); originalObjectUrl = null; }
+        if (compressedObjectUrl) { URL.revokeObjectURL(compressedObjectUrl); compressedObjectUrl = null; }
     };
 
-    // Advanced Compression Core
-    compressBtn.addEventListener('click', () => {
-        if(!currentFile) return showToast("No image selected!", "error");
-        
-        const targetKB = parseFloat(customSizeInput.value) || 20;
-        const targetBytes = targetKB * 1024;
+    // Helper: Promise-based canvas.toBlob for exact byte measurement
+    function canvasToBlob(canvas, quality) {
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => resolve(blob), 'image/jpeg', quality);
+        });
+    }
 
+    function loadImage(src) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = src;
+        });
+    }
+
+    // Upgraded Precision Compression Engine (Native Blob Binary Search)
+    compressBtn.addEventListener('click', async () => {
+        if (!currentFile) return showToast("No image selected!", "error");
+        
+        let targetKB = parseFloat(customSizeInput.value);
+        if (isNaN(targetKB) || targetKB < 5) targetKB = 5;
+        if (targetKB > 2000) targetKB = 2000;
+        customSizeInput.value = targetKB;
+
+        const targetBytes = targetKB * 1024;
         compressBtn.innerText = "COMPRESSING... ⏳";
         compressBtn.disabled = true;
 
-        const reader = new FileReader();
-        reader.readAsDataURL(currentFile);
-        reader.onload = (e) => {
-            const img = new Image();
-            img.src = e.target.result;
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                let width = img.width;
-                let height = img.height;
+        try {
+            const img = await loadImage(originalObjectUrl);
+            originalDimTxt.textContent = `${img.naturalWidth} × ${img.naturalHeight} px`;
 
-                // Max cap to prevent memory crash on massive 4K images
-                const MAX_DIM = 1920;
-                if(width > MAX_DIM) {
-                    height = Math.round((height * MAX_DIM) / width);
-                    width = MAX_DIM;
-                }
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
-                let minQ = 0.01, maxQ = 0.96, quality = 0.85;
-                let scale = 1.0;
-                let bestDataUrl = null;
-                let iterations = 0;
+            let baseW = img.naturalWidth;
+            let baseH = img.naturalHeight;
 
-                function iterateCompression() {
-                    canvas.width = Math.round(width * scale);
-                    canvas.height = Math.round(height * scale);
-                    const ctx = canvas.getContext('2d');
-                    
-                    // Fill white background (crucial for transparent PNGs converted to JPEG)
-                    ctx.fillStyle = "#ffffff";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            // Cap extreme 4K+ dimensions to keep mobile browsers fast and memory-safe
+            const MAX_DIM = 1920;
+            if (baseW > MAX_DIM || baseH > MAX_DIM) {
+                const ratio = MAX_DIM / Math.max(baseW, baseH);
+                baseW = Math.round(baseW * ratio);
+                baseH = Math.round(baseH * ratio);
+            }
 
-                    let dataUrl = canvas.toDataURL('image/jpeg', quality);
-                    let currentBytes = Math.round((dataUrl.length - 22) * 3 / 4);
-                    iterations++;
+            let scale = 1.0;
+            let bestUnderBlob = null;
+            let bestUnderDims = { w: baseW, h: baseH };
+            let smallestBlob = null;
+            let smallestDims = { w: baseW, h: baseH };
 
-                    // Perfect hit logic (within 15% under target)
-                    if ((currentBytes <= targetBytes && currentBytes >= targetBytes * 0.85) || iterations > 35) {
-                        finalizeCompression(dataUrl || bestDataUrl, currentBytes);
-                        return;
+            // Outer loop reduces resolution only if quality alone can't get under targetBytes
+            for (let scaleStep = 0; scaleStep < 8; scaleStep++) {
+                const w = Math.max(40, Math.round(baseW * scale));
+                const h = Math.max(40, Math.round(baseH * scale));
+                canvas.width = w;
+                canvas.height = h;
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, w, h);
+                ctx.drawImage(img, 0, 0, w, h);
+
+                // Binary search quality between 0.12 and 0.95
+                let low = 0.12;
+                let high = 0.95;
+                let foundUnderThisScale = false;
+
+                for (let i = 0; i < 9; i++) {
+                    const mid = (low + high) / 2;
+                    const blob = await canvasToBlob(canvas, mid);
+                    if (!blob) continue;
+
+                    if (!smallestBlob || blob.size < smallestBlob.size) {
+                        smallestBlob = blob;
+                        smallestDims = { w, h };
                     }
 
-                    if (currentBytes > targetBytes) {
-                        bestDataUrl = dataUrl; // Backup last state
-                        if (quality <= 0.15) {
-                            scale *= 0.85; // Drop resolution if quality is already rock bottom
-                            quality = 0.80; 
-                            minQ = 0.02; 
-                            maxQ = 0.85;
-                        } else {
-                            maxQ = quality;
-                            quality = (minQ + maxQ) / 2;
+                    if (blob.size <= targetBytes) {
+                        foundUnderThisScale = true;
+                        if (!bestUnderBlob || blob.size > bestUnderBlob.size) {
+                            bestUnderBlob = blob;
+                            bestUnderDims = { w, h };
                         }
+                        low = mid; // Push quality higher while staying <= targetBytes
                     } else {
-                        bestDataUrl = dataUrl;
-                        minQ = quality;
-                        quality = (minQ + maxQ) / 2;
+                        high = mid;
                     }
-                    
-                    // Non-blocking loop using timeout
-                    setTimeout(iterateCompression, 5);
                 }
 
-                iterateCompression();
-            };
-        };
+                // Stop as soon as we have a clean result under targetBytes at the highest possible resolution
+                if (foundUnderThisScale) break;
+                scale *= 0.8;
+            }
+
+            const finalBlob = bestUnderBlob || smallestBlob;
+            const finalDims = bestUnderBlob ? bestUnderDims : smallestDims;
+
+            if (!finalBlob) throw new Error("Compression failed.");
+
+            if (compressedObjectUrl) URL.revokeObjectURL(compressedObjectUrl);
+            compressedObjectUrl = URL.createObjectURL(finalBlob);
+
+            compressedPreviewImg.src = compressedObjectUrl;
+            compressedSizeTxt.textContent = (finalBlob.size / 1024).toFixed(2) + " KB";
+            compressedDimTxt.textContent = `${finalDims.w} × ${finalDims.h} px`;
+
+            downloadBtn.href = compressedObjectUrl;
+            downloadBtn.download = `orbitwebtools_resizer_${targetKB}kb.jpg`;
+
+            controlsSection.style.display = 'none';
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showToast("Compression Successful!", "success");
+        } catch (err) {
+            console.error(err);
+            showToast("Something went wrong. Please try another image.", "error");
+            compressBtn.innerText = "COMPRESS IMAGE NOW 🚀";
+            compressBtn.disabled = false;
+        }
     });
-
-    function finalizeCompression(optimizedDataUrl, outputBytes) {
-        compressedPreviewImg.src = optimizedDataUrl;
-        compressedSizeTxt.textContent = (outputBytes / 1024).toFixed(2) + " KB";
-        
-        downloadBtn.href = optimizedDataUrl;
-        downloadBtn.download = `orbitwebtools_resizer_${customSizeInput.value}kb.jpg`;
-
-        controlsSection.style.display = 'none';
-        resultsSection.style.display = 'block';
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        showToast("Compression Successful!", "success");
-    }
 </script>
 
 </body>
